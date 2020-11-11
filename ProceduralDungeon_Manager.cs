@@ -3,25 +3,25 @@
 public class ProceduralDungeon_Manager : MonoBehaviour
 {
 
-    public Dungeon[] pieces;
+    public Dungeon[] pieces;        //Differentes piece
 
-    public Dungeon entree;
-    public Dungeon sortie;
+    public Dungeon entree;          //Une piece qui servira d'entree/debut pour le joueur
+    public Dungeon sortie;          //une piece qui servira de sortie/objectif pour le joueur
 
-    public int dungeonLength;
-    public Vector3 dungeonOffSet;
+    public int dungeonLength;       //la taille du dungeon souhaite
+    public Vector3 dungeonOffSet;   //la position(x, y) de la piece d'entree
 
-    Vector3 piecePosition;
-    Vector3[] existingPiecePosition;
-    bool error = false;
+    Vector3 piecePosition;          //la position(x, y) de la piece cree
+    Vector3[] existingPiecePosition;//la memoire de toute les positions de piece precedement cree
+    bool error = false;             //en cas de probleme lors de la generation du dungeon
 
 
     void Start()
     {
-        Reset();
+        Reset();                    //je m'assure que toute les variables soit bien reset
     }
 
-    void Generate()
+    void Generate()                 //le code utiliser pour instancier les differents pieces
     {
         existingPiecePosition = new Vector3[dungeonLength];
 
@@ -50,7 +50,7 @@ public class ProceduralDungeon_Manager : MonoBehaviour
 
     }
 
-    void Reset()
+    void Reset()        
     {
 
         foreach(GameObject _piece in GameObject.FindGameObjectsWithTag("piece")){
@@ -67,7 +67,7 @@ public class ProceduralDungeon_Manager : MonoBehaviour
 
     }
 
-    void RandomPiecePosition()
+    void RandomPiecePosition()          //on verifie la position de la nouvelle piece
     {
 
         if (Random.value < 0.25f && AvailablePlacement(new Vector3(1, 0)))
@@ -88,11 +88,11 @@ public class ProceduralDungeon_Manager : MonoBehaviour
         }
         else
         {
-            error = true;
+            error = true;                    //si on a cree un cul-de-sac on reset la generation jusqu'a en cree un sans
         }
     }
 
-    bool AvailablePlacement(Vector3 placement)
+    bool AvailablePlacement(Vector3 placement) //on verifie dans existingPiecePosition qu'une piece n'a pas deje ete cree a cette position
     {
 
         for (int i = 0; i < existingPiecePosition.Length; i++)
